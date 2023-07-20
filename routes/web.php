@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\LoginController;
 
 
 /*
@@ -19,9 +20,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 
 Route::group(['prefix'=> 'admin'], function() {
@@ -56,3 +55,9 @@ Route::group(['prefix'=> 'admin'], function() {
     })->name('getSlug');
 
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/login', [AdminLoginController::class, 'authenticate']);
